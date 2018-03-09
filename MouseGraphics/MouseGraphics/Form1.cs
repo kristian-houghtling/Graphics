@@ -1,57 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
+
 
 namespace MouseGraphics
 {
     public partial class Form1 : Form
     {
-        static int center_x, center_y;
+        //Initialize variables
         static int ellipseWidth, ellipseHeight = 1;
         static bool drawAreaClick = false;
 
-        
-        
-
+        //Initialize Graphics,Pen,Brush
         Pen myPen = new Pen(Color.Black, 1);
-        
-        
-        Graphics g;
+        Pen brushBoarder = new Pen(Color.White);
         SolidBrush selectedColor = new SolidBrush(Color.Black);
-        Pen brushBoarder = new Pen(Color.Red);
-        //ColorDialog ColorDialog;
-        
+        Graphics g;
 
         public Form1()
         {
             InitializeComponent();
-            center_x = canvas.Width / 2;
-            center_y = canvas.Height / 2;
-            //selectedColor = new SolidBrush(Color.Black);
-            brushBoarder = new Pen(Brushes.White);
             brushBoarder.Width = 1;
-
             trackBar1.Minimum = 1;
             trackBar1.Maximum = 100;
             trackBar1.TickFrequency = 10;
 
             DisplayLine("Brush size is " + ellipseHeight.ToString());
 
-
         }
 
-        
-
-
         // All-purpose method for displaying a line of text in the
-        // text boxe.
+        // text boxes - from MSDN
         private void DisplayLine(string line)
         {
             textBox2.Invalidate();
@@ -60,12 +39,14 @@ namespace MouseGraphics
             textBox2.AppendText(Environment.NewLine);
         }
 
+        //Create graphics for the control
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
             g = canvas.CreateGraphics();
-            
+
         }
 
+        //Clear and reset Drawing area
         private void clear_btn_Click(object sender, EventArgs e)
         {
             canvas.Invalidate();
@@ -75,17 +56,14 @@ namespace MouseGraphics
             drawAreaClick = false;
         }
 
+        //Enable/Disable drawing and display Brush size
         private void canvas_MouseClick(object sender, MouseEventArgs e)
         {
-            //ellipseHeight = Int32.Parse(textBrushHeight.Text);
-            //ellipseWidth = Int32.Parse(textBrushWidth.Text);
-
             if (drawAreaClick == false)
             {
                 drawAreaClick = true;
                 textBox2.Clear();
                 DisplayLine("Brush size is " + ellipseHeight.ToString());
-
             }
             else
             {
@@ -95,33 +73,18 @@ namespace MouseGraphics
             }
         }
 
-        
-
+        //Create Color Dialog option
         private void button5_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                selectedColor = new SolidBrush(colorDialog.Color); 
+                selectedColor = new SolidBrush(colorDialog.Color);
             }
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            
-        }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            ellipseWidth = (int)(trackBar1.Value);
-            ellipseHeight = (int)(trackBar1.Value);
-        }
-
+        //Set Brush size with trackBar
         private void trackBar1_Value(object sender, EventArgs e)
         {
             ellipseWidth = (int)(trackBar1.Value);
@@ -129,6 +92,8 @@ namespace MouseGraphics
             DisplayLine("Brush size is " + ellipseHeight.ToString());
         }
 
+
+        //Set Brush size with MouseWheel and update text
         private void canvas_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta <= 0)
@@ -143,40 +108,37 @@ namespace MouseGraphics
                 ellipseHeight = ellipseHeight - 5;
                 DisplayLine("Brush size is " + ellipseHeight.ToString());
             }
-           
-            //MessageBox.Show("Mouse Wheel" + ellipseHeight);
-            
+
         }
 
+        //Draw to canvas when ever the mouse has moved
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            
+
             if (drawAreaClick == true)
             {
                 g.FillEllipse(selectedColor, e.Location.X, e.Location.Y, ellipseWidth, ellipseHeight);
                 g.DrawEllipse(brushBoarder, e.Location.X, e.Location.Y, ellipseWidth, ellipseHeight);
-                
+
             }
             else
             {
                 return;
             }
-            
-                //g.Dispose();
-                        
+
         }
 
-        
 
 
-            
 
 
-        
+
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
