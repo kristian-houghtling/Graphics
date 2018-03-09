@@ -52,14 +52,13 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(267, 760);
             this.panel1.TabIndex = 0;
-
             // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(18, 190);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(194, 222);
+            this.label1.Size = new System.Drawing.Size(194, 253);
             this.label1.TabIndex = 13;
             this.label1.Text = "1. Click to START drawing, click again to STOP drawing\r\n\r\n2. Click Choose Color t" +
     "o change default.\r\n\r\n3. Use slider to change brush size, OR use your MouseWheel." +
